@@ -4,9 +4,11 @@ name: Sarif
 
 # Controls when the workflow will run
 on:
-  push:
+  pull_request:
+    types: [opened, reopened, synchronize]
     branches:
-      - sarif-output
+      - master
+      - main
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -21,7 +23,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Checkmarx scan
-        uses: checkmarx/ast-github-action@AST-12645-pr-decoration-from-gh-action
+        uses: checkmarx/ast-github-action@2.0.7
         with:
           base_uri: https://ast-master-components.dev.cxast.net/
           cx_client_id: ${{ secrets.CX_CLIENT_ID }}
